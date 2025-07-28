@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="dashboard-header">
+        <h1>XSS Challenge Dashboard</h1>
+        <div class="level-indicator level-current">Level {{ level }}/10</div>
+    </div>
+    
+    <div class="welcome-card">
+        <h1>Welcome, {{ username }}!</h1>
+        <p>Welcome to the Advanced XSS Lab. This interactive platform is designed to teach you about Cross-Site Scripting vulnerabilities through hands-on challenges.</p>
+        
+        <div class="progress-container">
+            <span>Progress: {{ completed * 10 }}%</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ completed * 10 }}%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <h2>XSS Challenge Levels</h2>
+    <div class="levels-grid">
+        {% for lvl, info in levels.items() %}
+        <div class="level-card" style="animation-delay: {{ 0.1 * lvl }}s">
+            <div class="level-header">
+                <div class="level-number">Level {{ lvl }}</div>
+                <div class="level-title">{{ info.name }}</div>
+            </div>
+            <div class="level-body">
+                <p>{{ info.hint }}</p>
+                {% if lvl < level %}
+                    <span class="level-indicator level-completed">Completed</span>
+                {% elif lvl == level %}
+                    <a href="/level/{{ lvl }}" class="btn btn-primary">Start Challenge</a>
+                    <span class="level-indicator level-current">Current</span>
+                {% else %}
+                    <span class="level-indicator level-locked">Locked</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

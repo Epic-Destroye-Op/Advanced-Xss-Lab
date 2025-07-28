@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="dashboard-header">
+        <h1>Level {{ level }}: {{ level_info.name }}</h1>
+        <div class="level-indicator level-current">Level {{ level }}/10</div>
+    </div>
+    
+    <div class="challenge-container">
+        <div class="challenge-card">
+            <h2><i class="fas fa-code"></i> Challenge Instructions</h2>
+            <p>Your goal is to execute a JavaScript alert with the message "XSS Success!". The system has implemented a {{ level_info.filter|default('basic') }} filter to prevent XSS attacks.</p>
+            
+            <div class="hint-box">
+                <h3><i class="fas fa-lightbulb"></i> Hint</h3>
+                <p>{{ level_info.hint }}</p>
+            </div>
+            
+            <form class="payload-form" method="POST">
+                <div class="form-group">
+                    <label for="payload">Enter your XSS payload:</label>
+                    <textarea id="payload" name="payload" placeholder="Enter your XSS payload here...">{{ user_input }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Test Payload</button>
+            </form>
+        </div>
+        
+        <div class="challenge-card">
+            <h2><i class="fas fa-flask"></i> Test Results</h2>
+            <p>The system will render your payload in the context below:</p>
+            
+            <div class="result-box">
+                <!-- Vulnerable rendering area -->
+                {% if user_input %}
+                    {% autoescape false %}
+                        {{ user_input|safe }}
+                    {% endautoescape %}
+                {% else %}
+                    <p>Your payload will appear here after testing...</p>
+                {% endif %}
+            </div>
+            
+            {% if success %}
+            <div class="success-banner">
+                <h3><i class="fas fa-check-circle"></i> Challenge Completed!</h3>
+                <p>You've successfully exploited the XSS vulnerability! Proceed to the next level.</p>
+                <a href="/level/{{ level + 1 }}" class="btn btn-outline" style="margin-top: 15px; background: rgba(255,255,255,0.2);">Next Level</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

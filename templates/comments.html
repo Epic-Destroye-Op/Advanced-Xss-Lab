@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="welcome-card">
+        <h1>Comment System</h1>
+        <p>This is a simulated comment system vulnerable to stored XSS attacks. Try to persist an XSS payload that executes when others view the comments.</p>
+    </div>
+    
+    <div class="challenge-card">
+        <h2><i class="fas fa-comment"></i> Post a Comment</h2>
+        <form method="POST">
+            <div class="form-group">
+                <textarea name="comment" placeholder="Write your comment here..." style="min-height: 100px;"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+    </div>
+    
+    <div class="challenge-card">
+        <h2><i class="fas fa-comments"></i> Recent Comments</h2>
+        
+        {% if comments %}
+        <div style="margin-top: 1.5rem;">
+            {% for comment in comments %}
+            <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <strong>{{ comment.username }}</strong>
+                    <small style="color: var(--gray);">{{ comment.timestamp }}</small>
+                </div>
+                <div>
+                    {% autoescape false %}
+                        {{ comment.content }}
+                    {% endautoescape %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No comments yet. Be the first to post!</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

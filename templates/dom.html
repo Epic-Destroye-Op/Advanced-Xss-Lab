@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="welcome-card">
+        <h1>DOM-based XSS Challenge</h1>
+        <p>This page demonstrates DOM-based XSS vulnerabilities where the attack is executed as a result of modifying the DOM environment.</p>
+    </div>
+    
+    <div class="challenge-container">
+        <div class="challenge-card">
+            <h2><i class="fas fa-code-branch"></i> DOM XSS Examples</h2>
+            
+            <div class="form-group">
+                <label for="dom-input">Enter payload for document.write test:</label>
+                <input type="text" id="dom-input" oninput="testDomWrite(this.value)">
+            </div>
+            
+            <div class="form-group">
+                <label for="location-hash">Try fragment identifier (#payload):</label>
+                <input type="text" id="location-hash" placeholder="Add to URL: #<img src=x onerror=alert(1)>">
+            </div>
+            
+            <div id="dom-write-result" class="result-box" style="margin-top: 1rem;"></div>
+        </div>
+        
+        <div class="challenge-card">
+            <h2><i class="fas fa-info-circle"></i> About DOM XSS</h2>
+            <p>DOM-based XSS occurs when JavaScript takes user-controllable data and passes it to a sink that supports dynamic code execution.</p>
+            
+            <div class="hint-box">
+                <h3><i class="fas fa-lightbulb"></i> Common Sinks</h3>
+                <ul>
+                    <li>document.write()</li>
+                    <li>element.innerHTML</li>
+                    <li>eval()</li>
+                    <li>location.hash</li>
+                    <li>setTimeout() with user input</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function testDomWrite(value) {
+            document.getElementById('dom-write-result').innerHTML = 
+                "You entered: " + value;
+        }
+        
+        // Simulate DOM XSS from fragment identifier
+        if(window.location.hash) {
+            const payload = decodeURIComponent(window.location.hash.substring(1));
+            document.write("<div>Fragment payload: " + payload + "</div>");
+        }
+    </script>
+</section>
+{% endblock %}

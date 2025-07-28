@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="welcome-card">
+        <h1>Advanced XSS Vulnerability Lab</h1>
+        <p>Welcome to the most comprehensive XSS learning platform. This lab features 10 levels of progressively challenging XSS vulnerabilities with professional UI and real-world scenarios.</p>
+        
+        <div style="margin-top: 2rem;">
+            <a href="/login" class="btn btn-primary">Get Started</a>
+            <a href="/cheatsheet" class="btn btn-outline" style="margin-left: 1rem;">View Cheat Sheet</a>
+        </div>
+    </div>
+    
+    <div class="challenge-container">
+        <div class="challenge-card">
+            <h2><i class="fas fa-graduation-cap"></i> Learning Path</h2>
+            <ol style="margin-left: 1.5rem; line-height: 2;">
+                <li>Basic Reflected XSS</li>
+                <li>HTML Entity Escaping</li>
+                <li>Attribute-based XSS</li>
+                <li>DOM-based Injection</li>
+                <li>SVG Payloads</li>
+                <li>Template Literals</li>
+                <li>WAF Bypass Techniques</li>
+                <li>Service Worker XSS</li>
+                <li>AngularJS Sandbox Escape</li>
+                <li>WebSocket Injection</li>
+            </ol>
+        </div>
+        
+        <div class="challenge-card">
+            <h2><i class="fas fa-shield-alt"></i> Lab Features</h2>
+            <ul style="margin-left: 1.5rem; line-height: 2;">
+                <li>Professional UI with dark/light mode</li>
+                <li>Interactive challenge system</li>
+                <li>Real-world bypass techniques</li>
+                <li>Comment system for stored XSS</li>
+                <li>DOM-based XSS simulator</li>
+                <li>WebSocket injection demo</li>
+                <li>Comprehensive cheat sheet</li>
+                <li>Progress tracking</li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

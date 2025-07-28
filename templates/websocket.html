@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="welcome-card">
+        <h1>WebSocket XSS Challenge</h1>
+        <p>This page demonstrates XSS vulnerabilities through WebSocket messages. Try injecting a payload that executes when received via WebSocket.</p>
+    </div>
+    
+    <div class="challenge-container">
+        <div class="challenge-card">
+            <h2><i class="fas fa-network-wired"></i> WebSocket Connection</h2>
+            
+            <div class="form-group">
+                <label for="ws-message">Enter WebSocket message:</label>
+                <input type="text" id="ws-message" placeholder="Try: <img src=x onerror=alert(1)>">
+                <button onclick="sendMessage()" class="btn btn-primary" style="margin-top: 10px;">Send Message</button>
+            </div>
+            
+            <div id="ws-output" class="result-box" style="margin-top: 1rem;">
+                <p>WebSocket messages will appear here...</p>
+            </div>
+        </div>
+        
+        <div class="challenge-card">
+            <h2><i class="fas fa-info-circle"></i> About WebSocket XSS</h2>
+            <p>WebSocket XSS occurs when the application fails to properly sanitize messages received via WebSocket before rendering them in the DOM.</p>
+            
+            <div class="hint-box">
+                <h3><i class="fas fa-lightbulb"></i> Exploitation Tips</h3>
+                <ul>
+                    <li>Messages are often directly inserted into the DOM</li>
+                    <li>Look for event handlers or JavaScript execution contexts</li>
+                    <li>Try persistent payloads that affect other users</li>
+                    <li>Combine with other attack vectors like CSRF</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simulate WebSocket connection
+        const wsOutput = document.getElementById('ws-output');
+        
+        function sendMessage() {
+            const message = document.getElementById('ws-message').value;
+            wsOutput.innerHTML = "Received: " + message;
+        }
+    </script>
+</section>
+{% endblock %}
